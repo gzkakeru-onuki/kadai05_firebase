@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>TalkPass</title>
+</head>
+
+<body>
+    <i class="loading-icon">Loading...</i>
+    <div class="content">
+        <header>
+            <div class="header-center">
+                <h1 class="header-logo"><a href="index.html">TalkPass</a></h1>
+                <p class="header-logo-p">~心に渡す。言の葉を~</p>
+            </div>
+
+            <div class="header-right">
+                <ul class="header-list">
+                    <li class="header-item"><a href="main.html">Add</a></li>
+                    <li class="header-item"><a href="wordlist.html">Word</a></li>
+                    <li class="header-item"><a href="favorite.html">Favorite</a></li>
+                    <li class="header-item"><a href="study.html">Study</a></li><br>
+                    <li class="header-item"><a href="talkpass.html">Talkpass</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="main">
+            <h1 class="main-center">
+                "Deliver to the heart<span class="stand">.</span>"<br>
+                "The words of language<span class="stand">.</span>"
+            </h1>
+            <div class="confirm-content">
+                <h1 class="confirm-message">すでにアカウントをお持ちですか？</h1>
+                <p class="confirm-message-paragraph">やめたところからすぐに学習できます。</p>
+                <input id="login-btn" type="button" value="ログイン">
+            </div>
+            <div class="confirm-content-second">
+                <h1 class="confirm-message-second">TalkPassは初めてですか？</h1>
+                <p class="confirm-message-paragraph">今すぐ学びはじめましょう。</p>
+                <input id="start-btn" type="button" value="スタート">
+            </div>
+        </div>
+        <div class="footer">
+            <small>© TalkPass Co. Ltd. 2024</small>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $("#login-btn").on("click", function () {
+            $(".content").css("display", "none");
+            $(".loading-icon").css("display", "flex").fadeIn;
+            setTimeout(function () {
+                window.location.href = "login.html";
+            }, 1000);
+        })
+
+        $("#start-btn").on("click", function () {
+            $(".content").css("display", "none");
+            $(".loading-icon").css("display", "flex").fadeIn;
+            setTimeout(function () {
+                window.location.href = "signup.html";
+            }, 1000);
+        })
+    </script>
+</body>
+
+</html>

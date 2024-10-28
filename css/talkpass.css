@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
+
+body {
+    width: 430px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    border: 1px solid black;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+header {
+    background-color: lightcoral;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-size: 18px;
+    margin-left: 25px;
+    
+}
+
+.header-logo-p {
+    font-size: 15px;
+}
+
+.header-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-right {
+    display: flex;
+    justify-content: right;
+    
+}
+
+.header-list {
+    display: flex;
+    float: left;
+    list-style: none;
+}
+
+.header-item {
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.header-item a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.footer {
+    margin-top:105px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border: 2px solid skyblue;
+}
+
+.main {
+    text-align: center;
+    height: 530px;
+
+}
+
+.main-title {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.sub-title {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid gray;
+}
+
+#wordForm {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inputtext {
+    padding-bottom:50px;
+}
+
+.word-input {
+    padding-left:5px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    box-shadow: 2px 2px slategray;
+    width: 70%;
+    border-radius: 5px;
+}
+
+#submit-btn {
+    background-color: rgb(152, 219, 101);
+    border: 1px solid gray;
+    box-shadow: 2px 2px slategray;
+    width: 70%;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#submit-btn:hover {
+    box-shadow: none;
+}
+
+#favorite {
+    color: black;
+}
+
+#favorite.active {
+    color: gold;
+}
+
+#wordlist {
+    height: 470px;
+    border: 10px solid skyblue;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+#messageInput {
+    margin-top: 70px;
+}
+
+#sendButton {
+    border:1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#sendButton:hover {
+    background-color: aquamarine;
+}
+
+#chatbox {
+    overflow: auto;
+    border: 5px solid skyblue;
+    height: 480px;
+}

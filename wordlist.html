@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/wordlist.css">
+    <title>TalkPass</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-center">
+            <h1 class="header-logo"><a href="index.html">TalkPass</a></h1>
+            <p class="header-logo-p">~心に渡す。言の葉を~</p>
+        </div>
+
+        <div class="header-right">
+            <ul class="header-list">
+                <li class="header-item"><a href="main.html">Add</a></li>
+                <li class="header-item"><a href="wordlist.html">Word</a></li>
+                <li class="header-item"><a href="favorite.html">Favorite</a></li>
+                <li class="header-item"><a href="study.html">Study</a></li><br>
+                <li class="header-item"><a href="talkpass.html">Talkpass</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+        <h1>みんなが追加した単語一覧</h1>
+        <div id="wordlist"></div>
+    </div>
+
+    <div class="footer">
+        <small>© TalkPass Co. Ltd. 2024</small>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, push, get, set, child, onChildAdded, remove, onChildRemoved } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js'
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        import { firebaseConfig } from "./js/MyAuthkeysModules.js";
+        console.log(firebaseConfig);
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); // RealtimeDatabase使う
+        const dbRef = ref(db, "word-mean"); // RealtimeDatabase”chat“を使う
+        let userId = localStorage.getItem("userId");
+        get(dbRef).then((data) => {
+            if (data.exists()) {
+                $("#wordlist").empty();
+                data.forEach((childsnapData) => {
+                    const childData = childsnapData.val();
+                    console.log(childData);
+                    console.log(childsnapData);
+                    $("#wordlist").append(`<div> ${childData.word}: ${childData.mean}<button id="favorite" data-word-id="${childsnapData.key}">★</button</div>`);
+                });
+            } else {
+                console.log("Nodata available");
+                $("#wordlist").append("<div>データがありません</div>");
+            }
+        }).catch((error) => {
+            console.error("Error", error);
+        });
+
+        function addFavoriteWord(userId, wordId) {
+            const favoriteRef = ref(db, `user-favorites/${userId}/favoriteWords/${wordId}`);
+            set(favoriteRef, true).then(() => {
+                alert("お気に入りに追加しました");
+            }).catch((error) => {
+                console.error("Error", error);
+            });
+        }
+
+        $(document).on("click", "#favorite", (event) => {
+            const wordId = $(event.currentTarget).data("word-id");
+            addFavoriteWord(userId, wordId);
+            $(event.currentTarget).toggleClass("active");
+        })
+
+
+
+    </script>
+</body>
+
+</html>

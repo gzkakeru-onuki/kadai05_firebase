@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+
+
+body {
+    width: 430px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    border: 1px solid black;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+header {
+    background-color: lightcoral;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-size: 18px;
+    margin-left: 25px;
+
+}
+
+.header-logo-p {
+    font-size: 15px;
+}
+
+.header-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-right {
+    display: flex;
+    justify-content: right;
+
+}
+
+.header-list {
+    display: flex;
+    float: left;
+    list-style: none;
+}
+
+.header-item {
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.header-item a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.send-form {
+    width: 100%;
+    height: 635px;
+    margin: 0 auto;
+}
+
+.send-form h1 {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid gray;
+}
+
+#inputform {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border: 2px solid skyblue;
+}
+
+input[type="password"]:focus {
+    outline: none;
+    border: 2px solid skyblue;
+}
+
+table {
+    border-spacing: 0 40px;
+}
+
+
+
+#login-btn {
+    background-color: rgb(152, 219, 101);
+    border: 1px solid gray;
+    box-shadow: 2px 2px slategray;
+    width: 70%;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#login-btn:hover {
+    box-shadow: none;
+}
+
+#signup-btn {
+    background-color: rgb(152, 219, 101);
+    border: 1px solid gray;
+    box-shadow: 2px 2px slategray;
+    width: 70%;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#signup-btn:hover {
+    box-shadow: none;
+}

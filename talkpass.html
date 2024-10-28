@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/talkpass.css">
+    <title>TalkPass</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-center">
+            <h1 class="header-logo"><a href="index.html">TalkPass</a></h1>
+            <p class="header-logo-p">~心に渡す。言の葉を~</p>
+        </div>
+
+        <div class="header-right">
+            <ul class="header-list">
+                <li class="header-item"><a href="main.html">Add</a></li>
+                <li class="header-item"><a href="wordlist.html">Word</a></li>
+                <li class="header-item"><a href="favorite.html">Favorite</a></li>
+                <li class="header-item"><a href="study.html">Study</a></li><br>
+                <li class="header-item"><a href="talkpass.html">Talkpass</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+        <div id="chatbox"></div>
+        <input type="text" id="messageInput" placeholder="メッセージを入力">
+        <button id="sendButton">送信</button>
+    </div>
+
+    <div class="footer">
+        <small>© TalkPass Co. Ltd. 2024</small>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, onChildChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+        import { firebaseConfig } from "./js/MyAuthkeysModules.js";
+        console.log(firebaseConfig);
+
+        import {url} from "./js/MyAuthkeysModules.js"
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const messagesRef = ref(db, "messages");
+
+        $(document).ready(() => {
+            $("#sendButton").click(() => {
+                const message = $("#messageInput").val();
+                if (message) {
+                    sendMessage(message);
+                    $("#messageInput").val("");
+                }
+            });
+
+            function sendMessage(message) {
+                const newMessageRef = push(messagesRef);
+                set(newMessageRef, { english: message });
+
+                translateMessage(message).then(translatedMessage => {
+                    set(newMessageRef, { english: message, japanese: translatedMessage });
+                });
+            }
+
+            async function translateMessage(text) {
+                const response = await $.post(url, {
+                    q: text,
+                    target: "ja",
+                    source: "en"
+                });
+                return response.data.translations[0].translatedText;
+            }
+
+            onChildAdded(messagesRef, (snapShot) => {
+                const data = snapShot.val();
+                const messageId = snapShot.key;
+                const englishMessage = data.english;
+                const japaneseMessage = data.japanese || '翻訳中...';
+
+                $("#chatbox").append(`<div class="message" id="message-${messageId}">EN: ${englishMessage}<br> JP: <span class="japanese">${japaneseMessage}</span></div>`);
+                $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+            });
+
+            onChildChanged(messagesRef, (snapShot) => {
+                const data = snapShot.val();
+                const messageId = snapShot.key;
+                const japaneseMessage = data.japanese || '翻訳中...';
+
+                $(`#message-${messageId} .japanese`).text(japaneseMessage);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/signup.css">
+    <title>TalkPass</title>
+</head>
+
+<body>
+
+    <div class="content">
+        <header>
+            <div class="header-center">
+                <h1 class="header-logo"><a href="index.html">TalkPass</a></h1>
+                <p class="header-logo-p">~心に渡す。言の葉を~</p>
+            </div>
+
+            <div class="header-right">
+                <ul class="header-list">
+                    <li class="header-item"><a href="main.html">Add</a></li>
+                    <li class="header-item"><a href="wordlist.html">Word</a></li>
+                    <li class="header-item"><a href="favorite.html">Favorite</a></li>
+                    <li class="header-item"><a href="study.html">Study</a></li><br>
+                    <li class="header-item"><a href="talkpass.html">Talkpass</a></li>
+                </ul>
+            </div>
+        </header>
+
+
+        <div class="send-form">
+            <h1>サインアップ画面</h1>
+            <form id="inputform" method="POST">
+                <table>
+                    <tr class="tablerow">
+                        <th class="tablehead"><label for="mail">メールアドレス</label></th>
+                        <td><input type="text" id="mail" name="mail"></td>
+                    </tr>
+                    <tr class="tablerow">
+                        <th class="tablehead"><label for="password">パスワード</label></th>
+                        <td><input type="password" id="password" name="password"></td>
+                    </tr>
+                </table>
+                <input id="signup-btn" type="button" value="サインアップ">
+                <input id="login-btn" type="button" value="アカウントが既にある方">
+            </form>
+        </div>
+
+        <div class="footer">
+            <small>© TalkPass Co. Ltd. 2024</small>
+        </div>
+
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js'
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        import { firebaseConfig } from "./js/MyAuthkeysModules.js";
+        console.log(firebaseConfig);
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const db = getDatabase(app); // RealtimeDatabase使う
+        const dbRef = ref(db, "userinfo"); // RealtimeDatabase”chat“を使う
+
+        $("#signup-btn").on("click", function (event) {
+            event.preventDefault(); // フォーム送信を防止
+            const mail = $("#mail").val();
+            const password = $("#password").val();
+            
+            //ユーザー情報を作成
+            const auth =getAuth();
+            createUserWithEmailAndPassword(auth,mail,password).then((userCredential) =>{
+                alert("ユーザ情報を登録しました");
+                const user= userCredential.user;
+                const userId = user.uid;
+                localStorage.setItem("userId",userId);
+                window.location.href="main.html";
+            })
+            .catch(function(error){
+                alert("ユーザー情報を登録できません");
+            })
+        });
+
+        $("#login-btn").on("click",function(){
+            window.location.href="login.html";
+        })
+    </script>
+
+</body>
+
+</html>

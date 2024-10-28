@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <title>TalkPass</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-center">
+            <h1 class="header-logo"><a href="index.html">TalkPass</a></h1>
+            <p class="header-logo-p">~心に渡す。言の葉を~</p>
+        </div>
+
+        <div class="header-right">
+            <ul class="header-list">
+                <li class="header-item"><a href="main.html">Add</a></li>
+                <li class="header-item"><a href="wordlist.html">Word</a></li>
+                <li class="header-item"><a href="favorite.html">Favorite</a></li>
+                <li class="header-item"><a href="study.html">Study</a></li><br>
+                <li class="header-item"><a href="talkpass.html">Talkpass</a></li>
+
+            </ul>
+        </div>
+    </header>
+
+    <div class="main">
+        <h1 class="main-title">覚えたい単語を追加する！</h1>
+        <p class="sub-title">〜Please input your word〜</p>
+        <form id="wordForm" method="POST">
+            <label class="inputtext" for="word">単語：<input class="word-input" id="word" name="word" type="text"
+                    placeholder="覚えたい単語"></label>
+            <label class="inputtext" for="mean">意味：<input class="word-input" id="mean" name="mean" type="text"
+                    placeholder="単語の意味"></label>
+            <input id="submit-btn" type="button" value="追加する！">
+        </form>
+    </div>
+
+    <div class="footer">
+        <small>© TalkPass Co. Ltd. 2024</small>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js'
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        import { firebaseConfig } from "./js/MyAuthkeysModules.js";
+        console.log(firebaseConfig);
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); // RealtimeDatabase使う
+        const dbRef = ref(db, "word-mean"); // RealtimeDatabase”chat“を使う
+
+        $("#submit-btn").on("click", function (event) {
+            const word = {
+                word: $("#word").val(),
+                mean: $("#mean").val()
+            }
+            const newPostRef = push(dbRef);
+            set(newPostRef, word);
+            alert("単語を登録しました！");
+            $("#word").val("");
+            $("#mean").val("");
+        });
+    </script>
+</body>
+
+</html>
